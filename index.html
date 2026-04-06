@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Bike Premium | Mobilidade Avançada</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* =========================================
+           1. VARIÁVEIS E RESET
+        ========================================= */
+        :root {
+            --bg-white: #ffffff;
+            --bg-off: #f8f9fa;
+            --text-dark: #1a1a1a;
+            --text-muted: #737373;
+            --cta-color: #ffde00; 
+            --cta-hover: #e6c800;
+            --btn-dark: #1a1a1a;
+            --accent-green: #00a650; 
+            --radius-sm: 12px;
+            --radius-lg: 24px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
+        body { background: var(--bg-white); color: var(--text-dark); overflow-x: hidden; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+        /* =========================================
+           2. HEADER E BOTÃO FLUTUANTE
+        ========================================= */
+        header { background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); padding: 15px 0; border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 1000; }
+        .header-content { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-weight: 800; font-size: 1.2rem; text-decoration: none; color: var(--text-dark); letter-spacing: -0.5px; }
+        
+        .floating-cta { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: var(--text-dark); color: #fff; padding: 15px 40px; border-radius: 50px; font-weight: 800; font-size: 1rem; text-decoration: none; box-shadow: 0 10px 30px rgba(0,0,0,0.3); z-index: 999; border: 2px solid rgba(255,255,255,0.1); transition: 0.3s; white-space: nowrap; }
+        .floating-cta:hover { background: var(--cta-color); color: var(--text-dark); transform: translate(-50%, -5px); }
+        .pulse-icon { display: inline-block; animation: pulse 2s infinite; margin-right: 8px; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
+
+        /* =========================================
+           3. HERO SECTION
+        ========================================= */
+        .hero { padding: 60px 0 80px; }
+        .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+        .badge-launch { background: var(--text-dark); color: #fff; padding: 6px 14px; border-radius: 50px; font-size: 0.75rem; font-weight: 700; display: inline-block; margin-bottom: 20px; }
+        .hero-text h1 { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; line-height: 1.1; letter-spacing: -1.5px; margin-bottom: 20px; }
+        .hero-text p { font-size: 1.1rem; color: var(--text-muted); margin-bottom: 30px; max-width: 450px; }
+        .hero-img img { width: 100%; max-height: 480px; object-fit: contain; filter: drop-shadow(0 20px 40px rgba(0,0,0,0.08)); }
+
+        .btn { display: inline-block; padding: 16px 35px; border-radius: 50px; font-weight: 700; text-decoration: none; transition: 0.3s; text-align: center; border: none; cursor: pointer; }
+        .btn-primary { background: var(--cta-color); color: var(--text-dark); box-shadow: 0 4px 15px rgba(255, 222, 0, 0.3); }
+        .btn-primary:hover { background: var(--cta-hover); transform: translateY(-2px); }
+
+        .trust-bar { display: flex; gap: 20px; margin-top: 40px; flex-wrap: wrap; padding-top: 30px; border-top: 1px solid #eee; }
+        .trust-item { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; font-weight: 600; color: var(--text-muted); }
+
+        /* =========================================
+           4. BENEFÍCIOS (A DOR E A SOLUÇÃO)
+        ========================================= */
+        .benefits { padding: 80px 0; background: var(--bg-off); text-align: center; }
+        .benefits-title { margin-bottom: 50px; }
+        .benefits-title h2 { font-size: 2.2rem; font-weight: 800; margin-bottom: 15px; letter-spacing: -1px; }
+        .benefits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; }
+        .benefit-card { background: var(--bg-white); padding: 40px 30px; border-radius: var(--radius-lg); box-shadow: 0 10px 30px rgba(0,0,0,0.03); }
+        .b-icon { font-size: 3rem; margin-bottom: 20px; display: block; }
+        .benefit-card h3 { font-weight: 800; margin-bottom: 15px; font-size: 1.2rem; }
+        .benefit-card p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.5; }
+
+        /* =========================================
+           5. A CARTA DO CURADOR (NOVO)
+        ========================================= */
+        .curator-section { padding: 80px 0; background: var(--text-dark); color: #fff; }
+        .curator-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 60px; align-items: center; }
+        .curator-badge { display: inline-block; background: rgba(255, 222, 0, 0.1); color: var(--cta-color); padding: 8px 16px; border-radius: 50px; font-weight: 700; font-size: 0.85rem; margin-bottom: 20px; border: 1px solid rgba(255, 222, 0, 0.2); }
+        .curator-content h2 { font-size: 2.5rem; font-weight: 800; margin-bottom: 25px; line-height: 1.1; letter-spacing: -1px; }
+        .curator-content p { font-size: 1.1rem; color: #ccc; line-height: 1.7; margin-bottom: 20px; }
+        .curator-signature { font-family: 'Georgia', serif; font-style: italic; font-size: 1.2rem; color: var(--cta-color); margin-top: 30px; display: block; }
+
+        /* =========================================
+           6. LEGISLAÇÃO 2026
+        ========================================= */
+        .law-section { padding: 80px 0; background: var(--bg-white); }
+        .law-title { text-align: center; margin-bottom: 50px; }
+        .law-title h2 { font-size: 2.2rem; font-weight: 800; margin-bottom: 15px; }
+        .law-title p { color: var(--text-muted); font-size: 1.1rem; max-width: 600px; margin: 0 auto; }
+        
+        .table-container { overflow-x: auto; background: var(--bg-off); border-radius: var(--radius-lg); padding: 20px; border: 1px solid #eee; }
+        .law-table { width: 100%; min-width: 700px; border-collapse: collapse; text-align: left; }
+        .law-table th, .law-table td { padding: 18px; border-bottom: 1px solid #e5e5e5; }
+        .law-table th { font-weight: 800; color: var(--text-dark); width: 33%; }
+        
+        .col-center { text-align: center !important; }
+        .highlight-col { background: var(--bg-white); border-left: 2px solid var(--text-dark); border-right: 2px solid var(--text-dark); box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .th-highlight { color: var(--text-dark) !important; text-align: center; }
+        .td-highlight { color: var(--text-dark); font-weight: 700; text-align: center; }
+        .law-table td:not(:first-child) { text-align: center; }
+        .badge-green { background: rgba(0, 166, 80, 0.1); color: var(--accent-green); padding: 6px 12px; border-radius: 12px; font-size: 0.85rem; font-weight: 800; }
+        .badge-red { background: rgba(255, 0, 0, 0.05); color: #dc2626; padding: 6px 12px; border-radius: 12px; font-size: 0.85rem; font-weight: 800; }
+
+        /* =========================================
+           7. CATÁLOGO SLIDER E REVIEW EXPRESSO (NOVO)
+        ========================================= */
+        .catalog { padding: 80px 0; background: var(--bg-off); }
+        .section-title { text-align: center; margin-bottom: 50px; }
+        .section-title h2 { font-size: 2.2rem; font-weight: 800; letter-spacing: -1px; }
+
+        .slider-container { overflow: hidden; padding: 20px 0; }
+        .slider-track { display: flex; gap: 30px; width: max-content; align-items: flex-start; /* Essencial para o card expandir sem esticar os outros */ }
+        .tech-card { width: 360px; background: var(--bg-white); padding: 30px; border-radius: var(--radius-lg); box-shadow: 0 10px 30px rgba(0,0,0,0.04); flex-shrink: 0; transition: transform 0.3s; }
+        .tech-card:hover { transform: translateY(-5px); }
+        .tech-card img { width: 100%; height: 200px; object-fit: contain; margin-bottom: 20px; }
+        .tech-card h3 { font-size: 1.3rem; margin-bottom: 20px; font-weight: 800; text-align: center; }
+
+        .tech-specs { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #eee; }
+        .spec-item { text-align: center; }
+        .spec-label { display: block; font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 5px; font-weight: 600; }
+        .spec-value { display: block; font-size: 0.95rem; font-weight: 700; color: var(--text-dark); }
+        
+        .btn-outline { display: block; border: 2px solid #eee; color: var(--text-dark); width: 100%; background: transparent; text-align: center; margin-bottom: 15px; }
+        .btn-outline:hover { border-color: var(--text-dark); background: var(--text-dark); color: #fff; }
+
+        /* Review Expresso (Accordion Nativo) */
+        .card-review details { background: var(--bg-off); border-radius: 12px; padding: 12px 15px; font-size: 0.85rem; }
+        .card-review summary { font-weight: 700; color: var(--text-dark); cursor: pointer; list-style: none; display: flex; justify-content: center; align-items: center; gap: 5px; }
+        .card-review summary::-webkit-details-marker { display: none; }
+        .card-review summary::after { content: "▾"; font-size: 1.1rem; }
+        .card-review details[open] summary::after { content: "▴"; }
+        .card-review .review-content { margin-top: 15px; color: var(--text-muted); line-height: 1.5; text-align: left; border-top: 1px solid #ddd; padding-top: 10px; }
+        .review-pros { color: var(--accent-green); font-weight: 700; margin-top: 10px; }
+        .review-cons { color: #dc2626; font-weight: 700; margin-top: 10px; }
+
+        /* =========================================
+           8. COMO FUNCIONA A ENTREGA
+        ========================================= */
+        .delivery-steps { padding: 80px 0; background: var(--bg-white); text-align: center; border-top: 1px solid #eee; }
+        .steps-grid { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; margin-top: 40px; }
+        .step-item { max-width: 250px; }
+        .step-number { width: 50px; height: 50px; background: var(--text-dark); color: var(--cta-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 800; margin: 0 auto 20px; }
+        .step-item h4 { font-weight: 800; margin-bottom: 10px; }
+        .step-item p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; }
+
+        /* =========================================
+           9. PROVA SOCIAL & CROSS-SELL
+        ========================================= */
+        .testimonials { padding: 80px 0; background: var(--bg-off); }
+        .test-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 40px; }
+        .test-card { background: var(--bg-white); padding: 30px; border-radius: var(--radius-sm); border: 1px solid #eee; }
+        .stars { color: #f59e0b; font-size: 1.2rem; margin-bottom: 10px; }
+        .test-text { font-style: italic; color: var(--text-muted); margin-bottom: 15px; line-height: 1.5; }
+        .test-author { font-weight: 700; font-size: 0.9rem; }
+        .verified { color: var(--accent-green); font-size: 0.8rem; display: flex; align-items: center; gap: 5px; margin-top: 5px; font-weight: 600; }
+
+        .cross-sell { padding: 80px 0; background: var(--text-dark); color: #fff; }
+        .cross-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+        .cross-img-wrapper img { width: 100%; border-radius: 50%; box-shadow: 0 20px 50px rgba(0,0,0,0.5); border: 4px solid rgba(255,255,255,0.1); }
+        .cross-text h2 { font-size: 2.5rem; font-weight: 800; margin-bottom: 20px; }
+        .cross-text p { color: #aaa; font-size: 1.1rem; margin-bottom: 30px; line-height: 1.6; }
+        .btn-secondary { background: var(--bg-white); color: var(--text-dark); }
+        .btn-secondary:hover { background: var(--cta-color); }
+
+        /* =========================================
+           10. FAQ E FOOTER
+        ========================================= */
+        .faq { padding: 80px 0; max-width: 800px; margin: 0 auto; }
+        .faq details { background: var(--bg-off); margin-bottom: 15px; border-radius: var(--radius-sm); padding: 20px; cursor: pointer; border: 1px solid #eee; font-size: 1rem; }
+        .faq summary { font-weight: 700; font-size: 1.1rem; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+        .faq summary::after { content: "+"; font-size: 1.5rem; color: var(--text-muted); }
+        .faq details[open] summary::after { content: "-"; }
+        .faq details p { margin-top: 15px; color: var(--text-muted); line-height: 1.6; }
+
+        footer { padding: 60px 0; text-align: center; border-top: 1px solid #eee; }
+        .disclaimer { font-size: 0.8rem; color: var(--text-muted); max-width: 800px; margin: 20px auto 0; line-height: 1.5; }
+
+        /* =========================================
+           11. MOBILE
+        ========================================= */
+        @media (max-width: 768px) {
+            .hero-grid, .cross-grid, .curator-grid { grid-template-columns: 1fr; text-align: center; }
+            .hero-text h1 { font-size: 2.8rem; }
+            .trust-bar { justify-content: center; }
+            .hero-img { order: -1; }
+            .tech-card { width: 300px; }
+            .floating-cta { width: 90%; text-align: center; bottom: 20px; }
+            .curator-content h2 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container header-content">
+            <a href="#" class="logo">⚡ E-BIKE PREMIUM</a>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container hero-grid">
+                <div class="hero-text">
+                    <span class="badge-launch">LANÇAMENTO EXCLUSIVO 2026</span>
+                    <h1>Liberte o seu <br>lado aventureiro.</h1>
+                    <p>O design absoluto encontra a performance urbana. Fuja do trânsito com a nossa curadoria das melhores opções elétricas isentas de emplacamento.</p>
+                    
+                    <a href="https://meli.la/2e95vSn" class="btn btn-primary" target="_blank">Ver Oferta Oficial</a>
+                    
+                    <div class="trust-bar">
+                        <div class="trust-item"><span>🔒</span><span>Compra Segura</span></div>
+                        <div class="trust-item"><span>⚡</span><span>Entrega Full</span></div>
+                        <div class="trust-item"><span>🛡️</span><span>7 Dias Garantia</span></div>
+                    </div>
+                </div>
+                
+                <div class="hero-img">
+                    <img src="img/IMG-01.webp" alt="E-Bike Premium 2026">
+                </div>
+            </div>
+        </section>
+
+        <section class="benefits">
+            <div class="container">
+                <div class="benefits-title">
+                    <h2>Por que investir em uma E-Bike?</h2>
+                    <p style="color: var(--text-muted);">O retorno sobre o investimento que você sente no primeiro mês.</p>
+                </div>
+                <div class="benefits-grid">
+                    <div class="benefit-card">
+                        <span class="b-icon">⛽</span>
+                        <h3>Adeus, Posto de Gasolina</h3>
+                        <p>Recarregue a bateria na tomada comum da sua casa gastando apenas centavos por carga completa. Economia imediata no seu bolso.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <span class="b-icon">⏱️</span>
+                        <h3>Fuga do Trânsito</h3>
+                        <p>Ganhe horas do seu dia cortando caminho. Perfeito para o trajeto casa-trabalho com velocidade e zero estresse.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <span class="b-icon">🔌</span>
+                        <h3>Zero Manutenção Cara</h3>
+                        <p>Sem troca de óleo, sem vela, sem filtro. Motores elétricos de alta durabilidade que exigem apenas o cuidado básico com pneus e freios.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="curator-section">
+            <div class="container curator-grid">
+                <div class="curator-content">
+                    <span class="curator-badge">A NOSSA MISSÃO</span>
+                    <h2>Por que selecionamos apenas estas 3 E-Bikes?</h2>
+                    <p>O mercado de mobilidade elétrica explodiu, e com ele, centenas de opções de baixa qualidade inundaram a internet. Baterias que viciam rápido, motores fracos que não aguentam subidas e a falta crônica de peças de reposição são a realidade de quem compra sem orientação.</p>
+                    <p>Nosso trabalho é poupar o seu tempo e o seu dinheiro. Nós filtramos o mercado para entregar apenas os modelos que unem <strong>durabilidade comprovada, assistência técnica confiável e o melhor custo-benefício de 2026.</strong></p>
+                    <span class="curator-signature">Curadoria E-Bike Premium</span>
+                </div>
+                <div class="curator-visual">
+                    <img src="img/IMG-01.webp" alt="Curadoria Premium" style="width: 100%; border-radius: var(--radius-lg); opacity: 0.9;">
+                </div>
+            </div>
+        </section>
+
+        <section class="law-section">
+            <div class="container">
+                <div class="law-title">
+                    <h2>Novas Regras de Trânsito 2026</h2>
+                    <p>Compare os veículos e entenda por que os modelos autopropelidos são a escolha mais inteligente do mercado hoje.</p>
+                </div>
+
+                <div class="table-container">
+                    <table class="law-table">
+                        <thead>
+                            <tr>
+                                <th>Regras Atuais</th>
+                                <th class="highlight-col th-highlight">Bicicletas Elétricas<br>& Autopropelidos</th>
+                                <th class="col-center">Ciclomotores<br>(Scooters Maiores)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Registro e Emplacamento</strong></td>
+                                <td class="highlight-col td-highlight"><span class="badge-green">NÃO PRECISA</span></td>
+                                <td class="col-center"><span class="badge-red">OBRIGATÓRIO</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Exigência de CNH</strong></td>
+                                <td class="highlight-col td-highlight"><span class="badge-green">NÃO PRECISA</span></td>
+                                <td class="col-center"><span class="badge-red">CATEGORIA A ou ACC</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>IPVA Anual</strong></td>
+                                <td class="highlight-col td-highlight"><span class="badge-green">ISENTO</span></td>
+                                <td class="col-center"><span class="badge-red">OBRIGATÓRIO</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Idade Mínima</strong></td>
+                                <td class="highlight-col td-highlight">Sem restrição oficial*</td>
+                                <td class="col-center">Maior de 18 anos</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p style="text-align: center; color: #888; font-size: 0.8rem; margin-top: 15px;">*Apenas para modelos limitados a 32km/h, conforme Resolução Contran.</p>
+            </div>
+        </section>
+
+        <section class="catalog" id="modelos">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Explore a Linha</h2>
+                    <p>Modelos selecionados a dedo com as melhores avaliações do Mercado Livre.</p>
+                </div>
+            </div>
+
+            <div class="slider-container">
+                <div class="slider-track" id="sliderTrack">
+                    
+                    <div class="tech-card">
+                        <img src="img/IMG-02.webp" alt="Honeywhale B20">
+                        <h3>Honeywhale B20</h3>
+                        <div class="tech-specs">
+                            <div class="spec-item"><span class="spec-label">Velocidade</span><span class="spec-value">25 km/h</span></div>
+                            <div class="spec-item"><span class="spec-label">Potência</span><span class="spec-value">440W</span></div>
+                            <div class="spec-item"><span class="spec-label">Autonomia</span><span class="spec-value">35 km</span></div>
+                        </div>
+                        <a href="https://meli.la/11A7Jfg" class="btn btn-outline" target="_blank">Ver Detalhes no ML</a>
+                        
+                        <div class="card-review">
+                            <details>
+                                <summary>Ler Análise Curta</summary>
+                                <div class="review-content">
+                                    A queridinha para percursos urbanos curtos. É extremamente prática para guardar no apartamento ou colocar no porta-malas do carro.
+                                    <p class="review-pros">✓ Dobrável e super leve.</p>
+                                    <p class="review-cons">✗ Não indicada para pessoas muito altas.</p>
+                                </div>
+                            </details>
+                        </div>
+                    </div>
+
+                    <div class="tech-card">
+                        <img src="img/IMG-03.webp" alt="Yoo Mobility">
+                        <h3>Yoo Mobility Y-200</h3>
+                        <div class="tech-specs">
+                            <div class="spec-item"><span class="spec-label">Velocidade</span><span class="spec-value">30 km/h</span></div>
+                            <div class="spec-item"><span class="spec-label">Potência</span><span class="spec-value">350W</span></div>
+                            <div class="spec-item"><span class="spec-label">CNH</span><span class="spec-value">Isenta</span></div>
+                        </div>
+                        <a href="https://meli.la/2VznP31" class="btn btn-outline" target="_blank">Ver Detalhes no ML</a>
+                        
+                        <div class="card-review">
+                            <details>
+                                <summary>Ler Análise Curta</summary>
+                                <div class="review-content">
+                                    Focada no estilo e conforto. O design retrô chama atenção na rua, e o banco estendido oferece um conforto superior para rodar na cidade.
+                                    <p class="review-pros">✓ Design impecável e super confortável.</p>
+                                    <p class="review-cons">✗ Potência menor em ladeiras muito íngremes.</p>
+                                </div>
+                            </details>
+                        </div>
+                    </div>
+
+                    <div class="tech-card">
+                        <img src="img/IMG-04.webp" alt="Xplore 500W">
+                        <h3>Xplore 500W</h3>
+                        <div class="tech-specs">
+                            <div class="spec-item"><span class="spec-label">Velocidade</span><span class="spec-value">32 km/h</span></div>
+                            <div class="spec-item"><span class="spec-label">Potência</span><span class="spec-value">500W</span></div>
+                            <div class="spec-item"><span class="spec-label">CNH</span><span class="spec-value">Isenta</span></div>
+                        </div>
+                        <a href="https://meli.la/2WKuRSo" class="btn btn-outline" target="_blank">Ver Detalhes no ML</a>
+                        
+                        <div class="card-review">
+                            <details>
+                                <summary>Ler Análise Curta</summary>
+                                <div class="review-content">
+                                    O verdadeiro trator urbano. Se você mora em um lugar com muitas subidas ou precisa de força bruta, o motor de 500W não decepciona.
+                                    <p class="review-pros">✓ Motor potente; sobe ladeiras com facilidade.</p>
+                                    <p class="review-cons">✗ É mais pesada que as opções tradicionais.</p>
+                                </div>
+                            </details>
+                        </div>
+                    </div>
+
+                    <div class="tech-card">
+                        <img src="img/IMG-02.webp" alt="Honeywhale B20">
+                        <h3>Honeywhale B20</h3>
+                        <div class="tech-specs">
+                            <div class="spec-item"><span class="spec-label">Velocidade</span><span class="spec-value">25 km/h</span></div>
+                            <div class="spec-item"><span class="spec-label">Potência</span><span class="spec-value">440W</span></div>
+                            <div class="spec-item"><span class="spec-label">Autonomia</span><span class="spec-value">35 km</span></div>
+                        </div>
+                        <a href="https://meli.la/11A7Jfg" class="btn btn-outline" target="_blank">Ver Detalhes no ML</a>
+                        <div class="card-review">
+                            <details>
+                                <summary>Ler Análise Curta</summary>
+                                <div class="review-content">
+                                    A queridinha para percursos urbanos curtos. É extremamente prática para guardar no apartamento ou colocar no porta-malas do carro.
+                                    <p class="review-pros">✓ Dobrável e super leve.</p>
+                                    <p class="review-cons">✗ Não indicada para pessoas muito altas.</p>
+                                </div>
+                            </details>
+                        </div>
+                    </div>
+                    <div class="tech-card">
+                        <img src="img/IMG-03.webp" alt="Yoo Mobility">
+                        <h3>Yoo Mobility Y-200</h3>
+                        <div class="tech-specs">
+                            <div class="spec-item"><span class="spec-label">Velocidade</span><span class="spec-value">30 km/h</span></div>
+                            <div class="spec-item"><span class="spec-label">Potência</span><span class="spec-value">350W</span></div>
+                            <div class="spec-item"><span class="spec-label">CNH</span><span class="spec-value">Isenta</span></div>
+                        </div>
+                        <a href="https://meli.la/2VznP31" class="btn btn-outline" target="_blank">Ver Detalhes no ML</a>
+                        <div class="card-review">
+                            <details>
+                                <summary>Ler Análise Curta</summary>
+                                <div class="review-content">
+                                    Focada no estilo e conforto. O design retrô chama atenção na rua, e o banco estendido oferece um conforto superior para rodar na cidade.
+                                    <p class="review-pros">✓ Design impecável e super confortável.</p>
+                                    <p class="review-cons">✗ Potência menor em ladeiras muito íngremes.</p>
+                                </div>
+                            </details>
+                        </div>
+                    </div>
+                    <div class="tech-card">
+                        <img src="img/IMG-04.webp" alt="Xplore 500W">
+                        <h3>Xplore 500W</h3>
+                        <div class="tech-specs">
+                            <div class="spec-item"><span class="spec-label">Velocidade</span><span class="spec-value">32 km/h</span></div>
+                            <div class="spec-item"><span class="spec-label">Potência</span><span class="spec-value">500W</span></div>
+                            <div class="spec-item"><span class="spec-label">CNH</span><span class="spec-value">Isenta</span></div>
+                        </div>
+                        <a href="https://meli.la/2WKuRSo" class="btn btn-outline" target="_blank">Ver Detalhes no ML</a>
+                        <div class="card-review">
+                            <details>
+                                <summary>Ler Análise Curta</summary>
+                                <div class="review-content">
+                                    O verdadeiro trator urbano. Se você mora em um lugar com muitas subidas ou precisa de força bruta, o motor de 500W não decepciona.
+                                    <p class="review-pros">✓ Motor potente; sobe ladeiras com facilidade.</p>
+                                    <p class="review-cons">✗ É mais pesada que as opções tradicionais.</p>
+                                </div>
+                            </details>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section class="delivery-steps">
+            <div class="container">
+                <h2>Como você recebe sua nova máquina?</h2>
+                <div class="steps-grid">
+                    <div class="step-item">
+                        <div class="step-number">1</div>
+                        <h4>Compra Garantida</h4>
+                        <p>Você realiza o pagamento seguro direto na plataforma do Mercado Livre.</p>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-number">2</div>
+                        <h4>Envio Expresso</h4>
+                        <p>Modelos com selo Full ou envio transportadora são despachados rapidamente.</p>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-number">3</div>
+                        <h4>Pronta para Rodar</h4>
+                        <p>A bike chega 90% montada. Basta ajustar o guidão, plugar a bateria e acelerar.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="testimonials">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Quem comprou, aprova.</h2>
+                </div>
+                <div class="test-grid">
+                    <div class="test-card">
+                        <div class="stars">★★★★★</div>
+                        <p class="test-text">"Chegou em 2 dias pelo Full. A bike é linda, super potente nas subidas e o melhor: não precisei me preocupar com emplacamento."</p>
+                        <p class="test-author">Ricardo T.</p>
+                        <p class="verified">✓ Compra Verificada no ML</p>
+                    </div>
+                    <div class="test-card">
+                        <div class="stars">★★★★★</div>
+                        <p class="test-text">"Uso todos os dias para ir ao trabalho. A bateria dura a semana toda. O design chama muita atenção na rua, recomendo demais!"</p>
+                        <p class="test-author">Juliana M.</p>
+                        <p class="verified">✓ Compra Verificada no ML</p>
+                    </div>
+                    <div class="test-card">
+                        <div class="stars">★★★★★</div>
+                        <p class="test-text">"Pesquisei muito antes de comprar. Essa curadoria me ajudou a escolher a Xplore. Robusta e entregou tudo o que prometeu."</p>
+                        <p class="test-author">Carlos F.</p>
+                        <p class="verified">✓ Compra Verificada no ML</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cross-sell">
+            <div class="container cross-grid">
+                <div class="cross-img-wrapper">
+                    <img src="img/IMG-05.webp" alt="Segurança">
+                </div>
+                <div class="cross-text">
+                    <h2>Por que usar o Capacete Certo?</h2>
+                    <p>Mesmo não sendo obrigatório por lei para as bikes elétricas, a proteção não é opcional para quem valoriza a vida. Conheça nossos equipamentos com durabilidade testada.</p>
+                    <a href="https://capacetecerto.net.br/" class="btn btn-secondary" target="_blank">Acessar portal de segurança</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="faq">
+            <div class="section-title">
+                <h2>Dúvidas Frequentes</h2>
+            </div>
+            <details>
+                <summary>A bicicleta vem montada?</summary>
+                <p>Sim, na maioria dos modelos ela vai 90% montada na caixa. Geralmente você só precisa encaixar o guidão e os pedais. Um manual simples acompanha o produto.</p>
+            </details>
+            <details>
+                <summary>Como funciona a garantia?</summary>
+                <p>Você está totalmente protegido pelo programa Compra Garantida do Mercado Livre. Se a bike não for o que você esperava, você tem até 7 dias para solicitar a devolução gratuita.</p>
+            </details>
+            <details>
+                <summary>Posso andar na chuva?</summary>
+                <p>Sim! Os componentes elétricos principais possuem vedação contra água (resistência a respingos e chuva leve). Apenas evite submersão ou jatos fortes de água direto no motor.</p>
+            </details>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p class="logo">⚡ E-BIKE PREMIUM</p>
+            <p class="disclaimer"><strong>Aviso de Transparência:</strong> Somos um portal independente de pesquisa e curadoria. Os links disponibilizados redirecionam para a plataforma oficial do Mercado Livre, garantindo a você total segurança de pagamento e logística de entrega. Ganhamos uma pequena comissão por vendas qualificadas sem nenhum custo adicional para você.</p>
+            <p style="margin-top: 20px; font-size: 0.8rem; color: #aaa;">© 2026 E-Bike Premium. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <a href="#modelos" class="floating-cta">
+        <span class="pulse-icon">📍</span> Ver Modelos Agora
+    </a>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sliderTrack = document.getElementById('sliderTrack');
+            let isPaused = false;
+            let isDown = false;
+            let startX;
+            let scrollLeft;
+
+            const scrollSpeed = window.innerWidth < 768 ? 0.6 : 1;
+
+            function step() {
+                if (!isPaused && !isDown) {
+                    sliderTrack.parentElement.scrollLeft += scrollSpeed;
+                    if (sliderTrack.parentElement.scrollLeft >= sliderTrack.scrollWidth / 2) {
+                        sliderTrack.parentElement.scrollLeft = 0;
+                    }
+                }
+                requestAnimationFrame(step);
+            }
+            requestAnimationFrame(step);
+
+            sliderTrack.addEventListener('mouseenter', () => isPaused = true);
+            sliderTrack.addEventListener('mouseleave', () => isPaused = false);
+
+            sliderTrack.addEventListener('touchstart', (e) => {
+                isDown = true;
+                isPaused = true;
+                startX = e.touches[0].pageX - sliderTrack.parentElement.offsetLeft;
+                scrollLeft = sliderTrack.parentElement.scrollLeft;
+            });
+
+            sliderTrack.addEventListener('touchend', () => {
+                isDown = false;
+                setTimeout(() => isPaused = false, 1500);
+            });
+
+            sliderTrack.addEventListener('touchmove', (e) => {
+                if (!isDown) return;
+                e.preventDefault();
+                const x = e.touches[0].pageX - sliderTrack.parentElement.offsetLeft;
+                const walk = (x - startX) * 2;
+                sliderTrack.parentElement.scrollLeft = scrollLeft - walk;
+            });
+            
+            // Pausa o slider quando um review é aberto
+            const detailsElements = document.querySelectorAll('.card-review details');
+            detailsElements.forEach(detail => {
+                detail.addEventListener('toggle', () => {
+                    isPaused = detail.open;
+                });
+            });
+        });
+    </script>
+</body>
+</html>
