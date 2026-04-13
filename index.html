@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
+    <script>
+        const LINK_DO_SEU_EBOOK = "https://seulinkdogoodledrive.com/seu-pdf-aqui";
+    </script>
     <title>Guia das E-Bikes | As Melhores Opções de Mobilidade 2026</title>
-    <meta name="description" content="Descubra a curadoria das 5 melhores bicicletas elétricas e autopropelidos. Isentas de CNH e emplacamento. Escolha a sua e economize no dia a dia.">
-    <meta name="keywords" content="bicicleta elétrica, e-bike, scooter elétrica, mobilidade urbana, comprar bicicleta elétrica">
-    <meta name="author" content="Guia das E-Bikes">
-
+    <meta name="description" content="Descubra a curadoria das 5 melhores bicicletas elétricas e autopropelidos. Isentas de CNH e emplacamento.">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
@@ -44,7 +44,7 @@
         .floating-cta { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: var(--primary); color: #fff; padding: 15px 35px; border-radius: 50px; font-weight: 800; font-size: 1rem; text-decoration: none; box-shadow: 0 15px 30px rgba(0,0,0,0.25); z-index: 2000; transition: 0.3s; white-space: nowrap; border: 2px solid rgba(255,255,255,0.1); }
         .floating-cta:hover { background: var(--accent); color: var(--primary); transform: translate(-50%, -5px); border-color: transparent; }
 
-        /* HERO SECTION (BANNER REFINADO) */
+        /* HERO SECTION */
         .hero { padding: 80px 0; overflow: hidden; }
         .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
         .hero-badge { background: var(--primary); color: var(--white); padding: 8px 16px; border-radius: 30px; font-size: 0.75rem; font-weight: 700; display: inline-block; margin-bottom: 24px; }
@@ -119,7 +119,7 @@
         .icon-pro { color: var(--success); font-weight: 800; }
         .icon-con { color: var(--danger); font-weight: 800; }
 
-        /* === NOVA SEÇÃO: ISCA DIGITAL (LEAD CAPTURE) === */
+        /* ISCA DIGITAL (LEAD CAPTURE) */
         .lead-capture { padding: 80px 0; background: var(--primary); color: var(--white); text-align: center; }
         .lead-box { max-width: 600px; margin: 0 auto; background: rgba(255,255,255,0.05); padding: 50px 40px; border-radius: var(--radius-lg); border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
         .lead-box h2 { font-size: 2rem; color: var(--accent); margin-bottom: 15px; letter-spacing: -1px; }
@@ -288,7 +288,6 @@
             
             <div class="slider-container" id="sliderContainer">
                 <div class="slider-track" id="sliderTrack">
-                    
                     <div class="card">
                         <span class="scarcity-badge">Destaque 1000W 🔥</span>
                         <img src="IMG-03.webp" alt="Ouxi 1000W">
@@ -307,7 +306,6 @@
                             </div></details>
                         </div>
                     </div>
-
                     <div class="card">
                         <img src="IMG-04.webp" alt="Yoo Mobility Y-200">
                         <h3>Yoo Mobility Y-200</h3>
@@ -325,7 +323,6 @@
                             </div></details>
                         </div>
                     </div>
-
                     <div class="card">
                         <span class="scarcity-badge">Dobrável ⭐</span>
                         <img src="IMG-05.webp" alt="Honeywhale F6 Pro-s">
@@ -344,7 +341,6 @@
                             </div></details>
                         </div>
                     </div>
-
                     <div class="card">
                         <img src="IMG-06.webp" alt="TFG 1000W">
                         <h3>TFG Sport 1000W</h3>
@@ -362,7 +358,6 @@
                             </div></details>
                         </div>
                     </div>
-
                     <div class="card">
                         <img src="IMG-07.webp" alt="Nado K3">
                         <h3>Nado K3 Scooter</h3>
@@ -418,7 +413,6 @@
                         <a href="https://meli.la/14uVnVi" class="btn-card" target="_blank">Ver no Mercado Livre</a>
                         <div class="card-review"><details><summary>Resumo do Avaliador</summary><div class="review-content"><div class="pros-cons-item"><span class="icon-pro">✓</span> Rodas liga leve.</div><div class="pros-cons-item"><span class="icon-pro">✓</span> Eficiência 48V.</div><div class="pros-cons-item"><span class="icon-con">✗</span> Quadro compacto.</div></div></details></div>
                     </div>
-
                 </div>
             </div>
         </section>
@@ -427,11 +421,10 @@
             <div class="container">
                 <div class="lead-box">
                     <h2>🎁 Bônus: Guia Completo 2026</h2>
-                    <p>Ainda está em dúvida de qual modelo escolher? Preparamos um PDF exclusivo ensinando na internet e escolher a E-Bike perfeita para sua rotina.</p>
+                    <p>Ainda está em dúvida de qual modelo escolher? Preparamos um PDF exclusivo ensinando como evitar golpes na internet e escolher a E-Bike perfeita para sua rotina.</p>
                     
                     <form action="https://formsubmit.co/atendimento@mundodasideias.site" method="POST" class="lead-form">
-                        
-                        <input type="hidden" name="_next" value="https://seulinkdogoodledrive.com/seu-pdf-aqui">
+                        <input type="hidden" name="_next" id="url-redirecionamento" value="">
                         <input type="hidden" name="_subject" value="Novo Lead - Guia das E-Bikes!">
                         <input type="hidden" name="_captcha" value="false">
                         
@@ -557,6 +550,10 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // Puxa a variável do topo da página e joga dentro do formulário silenciosamente
+            document.getElementById('url-redirecionamento').value = LINK_DO_SEU_EBOOK;
+
+            // Lógica do Carrossel
             const track = document.getElementById('sliderTrack');
             const container = document.getElementById('sliderContainer');
             
